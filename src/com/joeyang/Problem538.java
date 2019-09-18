@@ -4,19 +4,20 @@ import java.util.Stack;
 
 public class Problem538 {
     public TreeNode convertBST(TreeNode root) {
-        TreeNode head = root;
+        int last = 0;
+        TreeNode cur = root;
         Stack<TreeNode> stack = new Stack<>();
-        stack.push(head);
-        head = head.left;
-        while (!stack.isEmpty()) {
-            while (head != null) {
-                stack.push(head);
-                head = head.left;
+        while (cur != null || !stack.empty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.right;
             }
-            head = stack.pop();
-            head = head.right;
-
+            cur = stack.pop();
+            cur.val += last;
+            last = cur.val;
+            cur = cur.left;
         }
+        return root;
     }
 
 
