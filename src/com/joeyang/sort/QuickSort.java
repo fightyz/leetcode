@@ -1,4 +1,4 @@
-package com.joeyang;
+package com.joeyang.sort;
 
 public class QuickSort {
 
