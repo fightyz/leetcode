@@ -1,4 +1,4 @@
-package com.joeyang;
+package com.joeyang.tree;
 
 import java.util.LinkedList;
 import java.util.List;

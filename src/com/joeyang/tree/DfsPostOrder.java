@@ -1,4 +1,4 @@
-package com.joeyang;
+package com.joeyang.tree;
 
 import java.util.ArrayList;
 import java.util.List;
