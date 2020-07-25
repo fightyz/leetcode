@@ -2,44 +2,25 @@ package com.joeyang;
 
 public class Problem122 {
     public int maxProfit(int[] prices) {
+        int i = 0;
+        int valley = prices[0];
+        int peak = prices[0];
+        int maxprofit = 0;
+
         if (prices.length < 2) {
             return 0;
         }
-        int peak = 0;
-        int valley = 0;
-        int total = 0;
-        boolean buyed = false;
-        for (int i = 0; i < prices.length; i++) {
-            if (isValley(prices, i) && !buyed) {
-                valley = prices[i];
-                buyed = true;
-                continue;
+        while (i < prices.length - 1) {
+            while (i < prices.length - 1 && prices[i] >= prices[i + 1]) {
+                i++;
             }
-            if (isPeak(prices, i) && buyed) {
-                peak = prices[i];
-                total += peak - valley;
-                buyed = false;
-                continue;
+            valley = prices[i];
+            while (i < prices.length - 1 && prices[i] <= prices[i + 1]) {
+                i++;
             }
+            peak = prices[i];
+            maxprofit += peak - valley;
         }
-        return total;
-    }
-
-    private boolean isPeak(int[] prices, int index) {
-        if (index == 0) {
-            return prices[index + 1] <= prices[index];
-        } else if (index == prices.length - 1) {
-            return prices[index] >= prices[index - 1];
-        }
-        return prices[index - 1] <= prices[index] && prices[index] >= prices[index + 1];
-    }
-
-    private boolean isValley(int[] prices, int index) {
-        if (index == 0) {
-            return prices[index + 1] >= prices[index];
-        } else if (index == prices.length - 1) {
-            return prices[index] <= prices[index - 1];
-        }
-        return prices[index - 1] >= prices[index] && prices[index] <= prices[index + 1];
+        return maxprofit;
     }
 }
