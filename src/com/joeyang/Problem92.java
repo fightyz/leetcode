@@ -1,13 +1,6 @@
 package com.joeyang;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-
-
-
-
-class Solution {
+public class Problem92 {
     public  class ListNode {
         int val;
         ListNode next;
