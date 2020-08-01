@@ -21,16 +21,27 @@ import java.util.Stack;
  */
 public class Problem503_ {
     public int[] nextGreaterElements(int[] nums) {
-        int length = nums.length;
-        int[] result = new int[nums.length];
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 2 * length - 1; i >= 0; i--) {
-            while (!stack.empty() && stack.peek() <= nums[i % length]) {
-                stack.pop();
-            }
-            result[i % length] = stack.empty() ? -1 : stack.peek();
-            stack.push(nums[i % length]);
+        int size = nums.length;
+        int[] result = new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = -1; // -1 表示未找到
         }
+        // 一个从栈底到栈顶单调递减的 单调栈。
+        // 当一个数 > 栈顶时，则栈顶找到它的目标值，栈顶退栈，继续比较下一个数，直到该数找到他的位置（栈空时，它自己入栈）
+        // 当一个数 <= 栈顶时，则栈中所有数都没有找到目标值，将该数入栈
+        Stack<Integer> decreasingStack = new Stack<>();
+        // 这里要遍历数组两轮才能找到所有值
+        for (int i = 0; i < size * 2; i++) {
+            // 栈不为空，且当前值 > 栈顶，则退栈顶，并且栈顶的目标值即为当前值
+            int curIndex = i % size;
+            int curValue = nums[curIndex];
+            while (!decreasingStack.empty() && nums[decreasingStack.peek()] < curValue) {
+                Integer targetIndex = decreasingStack.pop();
+                result[targetIndex] = curValue;
+            }
+            decreasingStack.push(curIndex);
+        }
+        // 经过两轮遍历后，有目标值的都应该已经在上面被更新过了，因此直接返回 result
         return result;
     }
 }
